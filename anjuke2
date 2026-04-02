@@ -11,7 +11,7 @@ class Spider():
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
             "referer": "https://xa.anjuke.com/"
         }
-    def download(self,url,writer):
+    def download(self,url,xinixi):
         # 获取页面数据
         resp = requests.get(url, headers=self.headers).text
         tree = etree.HTML(resp)
@@ -27,13 +27,13 @@ class Spider():
             tedian = "-".join(t_text)
             j_text = div.xpath(".//div[@class='zu-side']//text()")
             jiaqian = j_text[1] + j_text[3]
-            writer.writerow([fangyuan, huxing, dizhi, tedian, jiaqian])
+            xinxi.writerow([fangyuan, huxing, dizhi, tedian, jiaqian])
 
 if __name__ == "__main__":
     # 分页抓取
     with  open("xinxi.csv", "w", encoding="utf-8") as f:
-        writer = csv.writer(f)
-        writer.writerow(["房源标题", "户型信息", "详细地址", "房屋特点", "价格信息"])
+        xinxi = csv.writer(f)
+        xinxi.writerow(["房源标题", "户型信息", "详细地址", "房屋特点", "价格信息"])
         spider = Spider()
         for i in range(1,6):
             if i == 1:
@@ -42,6 +42,6 @@ if __name__ == "__main__":
             else:
                 print(f"正在爬取第{i}页")
                 url = f"https://xa.zu.anjuke.com/fangyuan/yantaqu/p{i}/"
-            spider.download(url,writer)
+            spider.download(url,xinxi)
             time.sleep(2)
     print("爬取成功")
