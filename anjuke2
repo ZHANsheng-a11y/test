@@ -82,8 +82,7 @@ if __name__ == "__main__":
                 url = f"https://xa.zu.anjuke.com/fangyuan/yantaqu/p{i}/"
             spider.download(url,xinxi)
             time.sleep(2)
-    print("爬取成功")
-    print("正在调用AI分析...")
+    print("爬取成功，正在通过AI分析")
     result = analyze_houses("xinxi.csv")
     print("AI 分析结果")
     print(result)
